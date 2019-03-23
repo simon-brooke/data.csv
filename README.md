@@ -165,7 +165,7 @@ spliced into the pipeline as follows:
 
 #### `dates-as-dates`
 
-The function `numbers-as-numbers`, when given as arguments a list or vector
+The function `dates-as-dates`, when given as arguments a list or vector
 some of whose elements are string representations of dates or times and a
 date format specifier, will return a list in which those string representations
 which match the specifier have been replaced by actual dates.
