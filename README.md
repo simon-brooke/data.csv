@@ -172,10 +172,10 @@ which match the specifier have been replaced by actual dates.
 
 The `date-format` argument is expected to be either
   1. A string in the format understood by `clj-time.formatters/formatter`, or
-  2. A keyword representing one of `clj-time.formatters` built-in formatters,
+  2. A keyword representing one of `clj-time.formatters` built-in formatters, or
   3. A custom formatter as constructed by `clj-time.formatters/formatter`
 
-See documentation for `[clj-time.format](https://github.com/clj-time/clj-time#clj-timeformat)`
+See documentation for [clj-time.format](https://github.com/clj-time/clj-time#clj-timeformat)
 for more information.
 
 This too can be spliced into the `read-csv` pipeline as follows:
