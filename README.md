@@ -142,6 +142,62 @@ Which approach to choose depends on the application. If the csv file isn't huge
 the second approach will often work well. If you want to be careful not to read
 the csv file into memory the first approach is preferable.
 
+### Cleaning
+
+Data returned by `read-csv` is in the form of a list of vectors of strings. But
+frequently many of those strings will represent numbers and often some will
+represent dates. Functions are provided in `clojure.data.cleaning` which can be
+spliced into the read pipeline to automatically parse such data.
+
+#### `numbers-as-numbers`
+
+The function `numbers-as-numbers`, when given a list or vector some of whose
+elements are string representations of numbers, will return a list in which
+those string representations have been replaced by actual numbers. It can be
+spliced into the pipeline as follows:
+
+```clojure
+(doall
+    (->>
+        (read-csv (slurp "data.csv") :separator \;)
+        (map #(numbers-as-numbers %))))
+```
+
+#### `dates-as-dates`
+
+The function `numbers-as-numbers`, when given as arguments a list or vector
+some of whose elements are string representations of dates or times and a
+date format specifier, will return a list in which those string representations
+which match the specifier have been replaced by actual dates.
+
+The `date-format` argument is expected to be either
+  1. A string in the format understood by `clj-time.formatters/formatter`, or
+  2. A keyword representing one of `clj-time.formatters` built-in formatters,
+  3. A custom formatter as constructed by `clj-time.formatters/formatter`
+
+See documentation for `[clj-time.format](https://github.com/clj-time/clj-time#clj-timeformat)`
+for more information.
+
+This too can be spliced into the `read-csv` pipeline as follows:
+
+```clojure
+(doall
+    (->>
+        (read-csv (slurp "data.csv") :separator \;)
+        (map #(date-as-dates % "yyyy-MM-dd"))))
+```
+
+Obviously, the cleaning filters can be daisy-chained:
+
+```clojure
+(doall
+    (->>
+        (read-csv (slurp "data.csv") :separator \;)
+        (map #(numbers-as-numbers %))
+        (map #(date-as-dates % :date))))
+```
+
+
 ### Parsing into maps
 
 Data.csv parses lines of a csv file into a vector of strings. This is often not
@@ -236,6 +292,12 @@ Developer Information
 
 * [Compatibility Test Matrix](http://build.clojure.org/job/data.csv-test-matrix/)
 
+
+### Building
+
+Build and test with [Maven](https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html):
+
+    mvn clean test install
 
 
 Change Log
