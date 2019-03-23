@@ -4,3 +4,5 @@ resources/
 lib/
 *.jar
 .cpcache/
+
+*.csv
