@@ -1,1 +1,2 @@
-{:paths ["src/main/clojure"]}
+{:deps {clj-time {:mvn/version "0.15.0"}}
+ :paths ["src/main/clojure"]}
